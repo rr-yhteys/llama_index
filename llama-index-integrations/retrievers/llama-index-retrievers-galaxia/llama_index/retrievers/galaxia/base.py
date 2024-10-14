@@ -96,9 +96,11 @@ class GalaxiaRetriever(BaseRetriever):
         smbb_api_url: str,
         smbb_api_key: str,
         smbb_knowledge_base_id: str,
+        n_retries: Optional[int] = 10,
         callback_manager: Optional[CallbackManager] = None,
         ):
 
+        self.n_retries = n_retries
         self.configuration = smabbler.api.client.Configuration(
             host=smbb_api_url
         )
@@ -122,7 +124,7 @@ class GalaxiaRetriever(BaseRetriever):
             query, 
             self.knowledge_base_id, 
             api_instance, 
-            n_retries=5
+            n_retries=self.n_retries
         )
 
         score = 1
